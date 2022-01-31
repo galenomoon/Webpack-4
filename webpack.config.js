@@ -2,7 +2,6 @@ const modoDev = process.env.NODE_ENV !== "production";
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
@@ -10,7 +9,11 @@ module.exports = {
   entry: "./src/principal.js",
   output: {
     filename: "principal.js",
-    path: __dirname + "./public",
+    path: __dirname + "/public",
+  },
+  devServer: {
+    contentBase: "./public",
+    port: 9000,
   },
   optimization: {
     minimizer: [
@@ -23,7 +26,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: estilo.css,
+      filename: "estilo.css",
     }),
   ],
   module: {
@@ -32,7 +35,7 @@ module.exports = {
         test: /\.s?[ac]ss$/,
         use: [
           MiniCssExtractPlugin.loader,
-          "style-loader",
+        //   "style-loader",
           "css-loader",
           "sass-loader",
         ],
